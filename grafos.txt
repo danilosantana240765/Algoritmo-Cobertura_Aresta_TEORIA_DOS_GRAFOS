@@ -1,0 +1,16 @@
+
+int isFile(){} --O(1)
+void retiraQuebraLinha(){} --O(1)
+void mostrarMatrizAdj(){} --O(N^2)
+void liberarMemoria(){} -- O(N)
+int getTotLinhaArquivo(){} -- O(N)
+int ** lerArquivo(){} -- O(N^2)
+int buscaArestaAdjacente(){} -- O(N)
+void capturarVertices(){} -- O(N^3)
+int isConjuntosIndependeteVertice(){} -- O(N^2)
+int isCoberturaAresta(){} -- O(N^2)
+int isGrafoSoLaco(){} -- O(N^4)
+int ** getVerticeNaoAdjacente(){} --O(N^3)
+int isGrafoValorado(int **matr, int N){} -- O(N^2)
+void cobertura_aresta(){}
+int main(){}
