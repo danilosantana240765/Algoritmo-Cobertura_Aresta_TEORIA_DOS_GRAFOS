@@ -14,3 +14,6 @@ int ** getVerticeNaoAdjacente(){} --O(N^3)
 int isGrafoValorado(int **matr, int N){} -- O(N^2)
 void cobertura_aresta(){}
 int main(){}
+
+
+O algoritmo está em "grafos.cpp" escrito em C++ com a sintax do C
