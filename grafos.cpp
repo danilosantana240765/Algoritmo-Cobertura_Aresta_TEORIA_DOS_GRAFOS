@@ -36,16 +36,13 @@ void mostrarMatrizAdj(int ** matrAdj, int N){
 }
 
 /*
-* FunÁao para liberar a mameria alocar em uma matriz 
+* Fun√ßao para liberar a mameria alocar em uma matriz 
 */
 void liberarMemoria(int **matr, int N){ 
 	int pos;
 	for(pos = 0; pos < N; pos++){
 		free(matr[pos]); // Liberar as linhas
 	}
-	
-	// Liberar a variavel da matriz
-	free(matr);
 }
 
 /*
@@ -74,11 +71,11 @@ int getTotLinhaArquivo(char * arquivo){
 * Funcao para ler o arquivo e jogar na matriz de adjacencia  
 */
 int ** lerArquivo(char * arquivo, int * N){ 
-	int ** matrAdj = NULL; // A matriz que guardar· os valores da matriz de adjacÍnte
+	int ** matrAdj = NULL; // A matriz que guardar√° os valores da matriz de adjac√™nte
 	char leitura[1000]; // Variavel para receber as string do arquivo que vai auxiliar na funcao gets() para ler arquivo
-	int totLinhaAnterior; // Vari·vel para auxiliar na validaÁ„o da matriz
+	int totLinhaAnterior; // Vari√°vel para auxiliar na valida√ß√£o da matriz
 	int totLinha = 0; // Variavel para contar as linhas
-	int totColuna; // Variavel para colocar os valores na matriz corretamente, ser· usado para auxiliar no strtok()
+	int totColuna; // Variavel para colocar os valores na matriz corretamente, ser√° usado para auxiliar no strtok()
 	char *aux; // Para ajudar a auxiliar na quebra das string na funcao strtok()
 	
 	// Alocar a linha da matriz com a quantidade de linha que tem o arquivo lido
@@ -111,9 +108,9 @@ int ** lerArquivo(char * arquivo, int * N){
 			}
 			
 			/*
-			* Seperando as string por unidade, ou seja vamos quebrar pelos espaÁo
-			* a string. Exemplo: 1 0 0 1: quebra pelo espaÁo e pegamos somente os valores
-			* ficaria {1, 0, 0, 1} sem os espaÁos
+			* Seperando as string por unidade, ou seja vamos quebrar pelos espa√ßo
+			* a string. Exemplo: 1 0 0 1: quebra pelo espa√ßo e pegamos somente os valores
+			* ficaria {1, 0, 0, 1} sem os espa√ßos
 			*/
 			aux = strtok(leitura, " ");
 			totColuna = 0; 
@@ -123,7 +120,7 @@ int ** lerArquivo(char * arquivo, int * N){
 				totColuna++;
 			}
 			
-			// Verificar se a linha anterior È igual a atual, se for È valida, sen„o È invalida
+			// Verificar se a linha anterior √© igual a atual, se for √© valida, sen√£o √© invalida
 			if(totLinha == 0){
 				totLinhaAnterior = totColuna;
 			}else {
@@ -144,7 +141,7 @@ int ** lerArquivo(char * arquivo, int * N){
 		fclose(file); 
 	}
 	
-	// Guarda a dimens„o da matriz de adjacente
+	// Guarda a dimens√£o da matriz de adjacente
 	*N = totLinha;
 	
 	// Retornando a matriz
@@ -152,15 +149,15 @@ int ** lerArquivo(char * arquivo, int * N){
 }
 
 /*
-* Funcao para pesquisar se dentro da matriz j· existe as coordenada salva
-* basicamente ele ir· retorna 1 para verdadeiro e 0 para falso
+* Funcao para pesquisar se dentro da matriz j√° existe as coordenada salva
+* basicamente ele ir√° retorna 1 para verdadeiro e 0 para falso
 * O(N)
 */
 int buscaArestaAdjacente(int **matr, int N, int i_busca, int j_busca){
 	int i = 0;
 	int encontrado = 0; 
 	
-	/* Buscando por vertice que s„o adjacente */
+	/* Buscando por vertice que s√£o adjacente */
 	while(i < N && !encontrado){     
 		if(matr[0][i] == i_busca || matr[1][i] == j_busca  || matr[0][i] == j_busca || matr[1][i] == i_busca){
 			encontrado = 1;
@@ -172,32 +169,32 @@ int buscaArestaAdjacente(int **matr, int N, int i_busca, int j_busca){
 }
 
 /*
-* Funcao pra selecionar os vertice n„o fizeram parte dos vertices pares n„o adjacente.
+* Funcao pra selecionar os vertice n√£o fizeram parte dos vertices pares n√£o adjacente.
 * 
 */
 void capturarVertices(int **matr_fixacao, int **matr_adj, int N, int N_fixo, int * tot_fixacao){
 	int j = 0;
 	int isLaco = 0;
 	if(N >= 0){
-		// Verifica se o vertice que ficou de fora, n„o foi selecionado no momento que faz a seleÁ„o de pares de vertices
+		// Verifica se o vertice que ficou de fora, n√£o foi selecionado no momento que faz a sele√ß√£o de pares de vertices
 		if(!buscaArestaAdjacente(matr_fixacao, *tot_fixacao, N, N)){
 			/* Esse loop busca por uma aresta, pelo busca por uma aresta se caso
-			 * n„o tiver aresta, busca pelos laÁo
+			 * n√£o tiver aresta, busca pelos la√ßo
 			 */
 			while((matr_adj[N][j] == 0 || N == j) && j < N_fixo){ 
-				// Verificando se tem laÁo
+				// Verificando se tem la√ßo
 				if(matr_adj[N][j] != 0 && N == j){
 					isLaco = 1;
 				}
 				j++;
 			}
 			
-			// Selecionando uma aresta sem ser laÁo, caso o vertice tenha aresta sem contar com os laÁo
+			// Selecionando uma aresta sem ser la√ßo, caso o vertice tenha aresta sem contar com os la√ßo
 			if(j < N_fixo && matr_adj[N][j] != 0){
 				matr_fixacao[0][*tot_fixacao] = N;
 				matr_fixacao[1][*tot_fixacao] = j;
 				(*tot_fixacao)++;
-			}else if(isLaco){ // Caso esse vertice sÛ tenha laÁo.
+			}else if(isLaco){ // Caso esse vertice s√≥ tenha la√ßo.
 				matr_fixacao[0][*tot_fixacao] = N;
 				matr_fixacao[1][*tot_fixacao] = N;
 				(*tot_fixacao)++;
@@ -205,13 +202,13 @@ void capturarVertices(int **matr_fixacao, int **matr_adj, int N, int N_fixo, int
 		
 		}
 		
-		// Chamada recursiva para verificar se todos os vertice n„o esta no conjunto 
+		// Chamada recursiva para verificar se todos os vertice n√£o esta no conjunto 
 		capturarVertices(matr_fixacao, matr_adj, N - 1, N_fixo, tot_fixacao);
 	}
 }
 
 
-/* Criando uma funcao para verificar se o grafo È um conjuto independete de vertices  */
+/* Criando uma funcao para verificar se o grafo √© um conjuto independete de vertices  */
 int isConjuntosIndependeteVertice(int **matr_adj, int N){
 	int i = 0;
 	int j = 0;
@@ -243,14 +240,14 @@ int isCoberturaAresta(int **matr, int N, int N_fixo){
 			i++;
 		}
 		
-		// Nessa express„o verifica a expressao lÛgica v·ri·vel isvalido com o retorno da chamada recursiva
+		// Nessa express√£o verifica a expressao l√≥gica v√°ri√°vel isvalido com o retorno da chamada recursiva
 		return isvalido && isCoberturaAresta(matr, N -1, N_fixo);
 	}
 	
 	return 1;
 }
 
-/* Criando uma funcao para verificar se o grafo so tem laÁo */
+/* Criando uma funcao para verificar se o grafo so tem la√ßo */
 int isGrafoSoLaco(int **matr_adj, int N){
 	int i = 0;
 	int j = 0;
@@ -269,19 +266,19 @@ int isGrafoSoLaco(int **matr_adj, int N){
 }
 
 /* 
-*  Objetivo dessa funÁ„o È selecionar as aresta que n„o s„o adjacente e guardar dentro de uma matriz 
-*  MATR[2][N] que ser· o conjunto de aresta que n„o sao adjacente
+*  Objetivo dessa fun√ß√£o √© selecionar as aresta que n√£o s√£o adjacente e guardar dentro de uma matriz 
+*  MATR[2][N] que ser√° o conjunto de aresta que n√£o sao adjacente
 * 
 */
 int ** getVerticeNaoAdjacente(int ** matr, int N, int i_fixado, int j_fixado, int * tot_cobertura){
 	int i, j;
 	/* 
-	* Matriz para guardas os pares de vertices que n„o tocam. Basciamente essa  matriz È [2][N]
-	* onde ir· guardar pares de arestas que s„o cobertura. 
-	* Vamos supor que a aresta A(1,2 ). Ent„o o conjunto ser· guardado:
-	* matriz_de_fixacao[0][N] = 1, onde somente N ir· v·riar
-	* matriz_de_fixacao[1][N] = 2, onde somente N v·riar
-	* Quando o vertice tem A(x, y) o armazenamento ser·:
+	* Matriz para guardas os pares de vertices que n√£o tocam. Basciamente essa  matriz √© [2][N]
+	* onde ir√° guardar pares de arestas que s√£o cobertura. 
+	* Vamos supor que a aresta A(1,2 ). Ent√£o o conjunto ser√° guardado:
+	* matriz_de_fixacao[0][N] = 1, onde somente N ir√° v√°riar
+	* matriz_de_fixacao[1][N] = 2, onde somente N v√°riar
+	* Quando o vertice tem A(x, y) o armazenamento ser√°:
 	* A linha 0 e coluna  N da matriz guarda o vertice x 
 	* A linha 1 e coluna N da matriz guarda o vertice y
 	*/
@@ -301,27 +298,27 @@ int ** getVerticeNaoAdjacente(int ** matr, int N, int i_fixado, int j_fixado, in
 	int tot = 0; // Variavel para usar na "matriz_de_fixacao" para guardar o conjutos de aresta que tocam em todos os vertices
 	
 	/*
-	* O objetivo desse comando È basicamente verificar se o valor da matriz È diferente de zero para evitar fixar valores inv·lido
-	* e depois as arestas que nao sao adjacente ser· guardado dentro da matriz chamada "matriz_de_fixacao", onde guardar· o par
-	* de vertice que È a aresta que faz cobertura
-	* -- Primeiro verificac„o: se a matriz adjacente na posicao [i_fixo][j_fixo] n„o seja igual a zero e tambÈm 
-	* 	n„o seja laÁos, para evitar o algoritmo de jogar laÁo como cobertura de aresta.
-	* -- Segunda verificaÁ„o: se nesse grafo sÛ tem laÁos, isso porque for grafos que sÛ n„o tem nenhuma aresta e nenhum vertice
-	*	e esse vertices tenha algum laÁo, pegar esse laÁo como cobertura 
+	* O objetivo desse comando √© basicamente verificar se o valor da matriz √© diferente de zero para evitar fixar valores inv√°lido
+	* e depois as arestas que nao sao adjacente ser√° guardado dentro da matriz chamada "matriz_de_fixacao", onde guardar√° o par
+	* de vertice que √© a aresta que faz cobertura
+	* -- Primeiro verificac√£o: se a matriz adjacente na posicao [i_fixo][j_fixo] n√£o seja igual a zero e tamb√©m 
+	* 	n√£o seja la√ßos, para evitar o algoritmo de jogar la√ßo como cobertura de aresta.
+	* -- Segunda verifica√ß√£o: se nesse grafo s√≥ tem la√ßos, isso porque for grafos que s√≥ n√£o tem nenhuma aresta e nenhum vertice
+	*	e esse vertices tenha algum la√ßo, pegar esse la√ßo como cobertura 
 	*/
-	if(matr[i_fixado][j_fixado] != 0 && i_fixado != j_fixado){ // -- Primeira verificaÁ„o
+	if(matr[i_fixado][j_fixado] != 0 && i_fixado != j_fixado){ // -- Primeira verifica√ß√£o
 		
-		// Jogando os primeiro pares de vertices que s„o cobertura de aresta na primeira posiÁ„o
+		// Jogando os primeiro pares de vertices que s√£o cobertura de aresta na primeira posi√ß√£o
 		matriz_de_fixacao[0][tot] = i_fixado;
 		matriz_de_fixacao[1][tot] = j_fixado;
 		tot++;
 		
-		// Fazendo uma repetiÁ„o para verificar outros pares de vertice que pode ser formado para ser cobertura
+		// Fazendo uma repeti√ß√£o para verificar outros pares de vertice que pode ser formado para ser cobertura
 		for(i = 0; i < N; i++){ 
 			for(j = 0; j < N; j++){
 				/*
 				* Basicamente para fazer a cobertura de aresta, primeiro busca na "matriz_de_fixacao()" se
-				* dentro dela n„o existe nenhum vertice que seja adjecente, caso j· seja, entao n„o entra na condiÁ„o
+				* dentro dela n√£o existe nenhum vertice que seja adjecente, caso j√° seja, entao n√£o entra na condi√ß√£o
 				*/
 				if(matr[i][j] != 0 && i != j){
 					if(!buscaArestaAdjacente(matriz_de_fixacao, tot, i, j)){
@@ -336,13 +333,13 @@ int ** getVerticeNaoAdjacente(int ** matr, int N, int i_fixado, int j_fixado, in
 		
 		/* Chamar a funcao para colocar um vertice que ficou de fora da cobertura de aresta
 		* Se por exemplo tiver 5 vertices, e vamos supor que desse 5 vertice somente as aresta
-		* A(1, 2), A(3, 4) È cobertura, sÛ que ficou faltando o vertice 5, devido o vertice 5 n„o formar par com outro
-		* vertice para ter uma aresta que seja cobertura, esse vertice ficou de fora, masi colocar ele tambÈm no conjunto
-		* È usada essa funcao "capturarVertices()" onde basicamente verifica quais vertices ficou de fora do conjuto
-		* aquele que ficou de fora, entao È colocado no conjuto, mesmo essa tendo adjacencia com outro vertice.
+		* A(1, 2), A(3, 4) √© cobertura, s√≥ que ficou faltando o vertice 5, devido o vertice 5 n√£o formar par com outro
+		* vertice para ter uma aresta que seja cobertura, esse vertice ficou de fora, masi colocar ele tamb√©m no conjunto
+		* √© usada essa funcao "capturarVertices()" onde basicamente verifica quais vertices ficou de fora do conjuto
+		* aquele que ficou de fora, entao √© colocado no conjuto, mesmo essa tendo adjacencia com outro vertice.
 		*/
 		capturarVertices(matriz_de_fixacao, matr, N - 1, N, &tot);
-	}else if(isGrafoSoLaco(matr, N)){ // -- Segunda verificaÁ„o 
+	}else if(isGrafoSoLaco(matr, N)){ // -- Segunda verifica√ß√£o 
 		capturarVertices(matriz_de_fixacao, matr, N - 1, N, &tot);
 	}else {
 		liberarMemoria(matriz_de_fixacao, 2);
@@ -353,11 +350,11 @@ int ** getVerticeNaoAdjacente(int ** matr, int N, int i_fixado, int j_fixado, in
 	return matriz_de_fixacao;
 }
 
-/* Funcao para verificar se o grafo È valorado  */
+/* Funcao para verificar se o grafo √© valorado  */
 int isGrafoValorado(int **matr, int N){
 	int i, j;
 	
-	/* Basicamente È verificar se todos os bits 1 s„o igual ao total, caso n„o seja, È porque È valorado */
+	/* Basicamente √© verificar se todos os bits 1 s√£o igual ao total, caso n√£o seja, √© porque √© valorado */
 	int totalBit1 = 0;
 	int total = 0;
 	
@@ -387,8 +384,8 @@ void cobertura_aresta(int ** matr, int N){
 	int tot_cobertura;
 	
 	/*
-	* O objetivo desse "for" È basicamente pegar cada valor da matriz de adjacencia e comparar com todos os
-	* valores da mesma matriz, onde ir· verificar se È adjacente.
+	* O objetivo desse "for" √© basicamente pegar cada valor da matriz de adjacencia e comparar com todos os
+	* valores da mesma matriz, onde ir√° verificar se √© adjacente.
 	*/
 	
 	if(isConjuntosIndependeteVertice(matr, N) || !isCoberturaAresta(matr, N, N)){ 
@@ -402,8 +399,8 @@ void cobertura_aresta(int ** matr, int N){
 				
 				/*
 				* Basicamente aqui pegar a menor conjunto de aresta que compoe a combertura de aresta
-				* caso o conj_cobertura_minimal for nula È porque n„o tem nenhuma ainda no conjunto, 
-				* entao ja recebe a primeiro conjunto de depois compara que È o maior e quem È o menor
+				* caso o conj_cobertura_minimal for nula √© porque n√£o tem nenhuma ainda no conjunto, 
+				* entao ja recebe a primeiro conjunto de depois compara que √© o maior e quem √© o menor
 				* caso o conjunto seja menor do que retorna da funcao getVerticeNaoAdjacente() entao o
 				* conj_cobertura_minimal recebe esse menor
 				*/
@@ -411,7 +408,7 @@ void cobertura_aresta(int ** matr, int N){
 					aux = conj_cobertura_minimal;
 					conj_cobertura_minimal = conj_cobertura;
 					tot_cobertura_minimal = tot_cobertura;
-					// Caso aux tenha algum endereÁo de memoria, liberar memoria
+					// Caso aux tenha algum endere√ßo de memoria, liberar memoria
 					if(aux != NULL){
 						liberarMemoria(aux, 2); 
 					}
@@ -448,7 +445,7 @@ void cobertura_aresta(int ** matr, int N){
 }
 
 /* Funcao pra transformar uma letra minusculas para maiscula
-* Obs: Agente criou essa funcao, porque a funÁ„o nativa da linguagem C++ ou C n„o estava funcionando
+* Obs: Agente criou essa funcao, porque a fun√ß√£o nativa da linguagem C++ ou C n√£o estava funcionando
 */
 char * caixaAlta(char * string){
 	int pos;
@@ -468,7 +465,7 @@ int main(){
 	setlocale(LC_ALL, "Portuguese");
 	
 	char * arquivo = (char*) malloc(sizeof(char));
-	char * flag; // Variavel que vai guardar o endereÁo do flag de saida
+	char * flag; // Variavel que vai guardar o endere√ßo do flag de saida
 	int ** matrAdj;
 	int N;
 	int pos;
@@ -482,11 +479,11 @@ int main(){
 		// Comando do prompt do windows para limpar o terminal
 		system("cls");  
 		
-		// Variavel para controlar a saida da repitiÁ„o do while
+		// Variavel para controlar a saida da repiti√ß√£o do while
 		flag = caixaAlta(arquivo); 
 		// Verificando se o arquivo existe
 		if(strcmp(flag, "SAIR") != 0){
-			// Concatena com a extens„o
+			// Concatena com a extens√£o
 			strcat(arquivo, ".txt");
 			// Verificando se o arquivo existe
 			if(isFile(arquivo)){ 
